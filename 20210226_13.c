@@ -32,7 +32,7 @@ void printTime(myTime *time);
 int main(void){
 
     myTime *time1 = (myTime*)malloc(sizeof(myTime));
-    time1->seconds = 48;
+    time1->seconds = 30;
     time1->minutes = 31;
     time1->hours = 21;
     myTime *time2 = (myTime*)malloc(sizeof(myTime));
@@ -143,23 +143,127 @@ myTime* addStructure(myTime* time1,myTime* time2){
 myTime* subtractStructure(myTime* time1,myTime* time2){
 
     myTime* result = (myTime*)malloc(sizeof(myTime));
-    if(time1->hours > time2->hours){
+    if(time1->hours >= time2->hours){
         result->hours = time1->hours - time2->hours;
+        if(time1->minutes >= time2->minutes){
+            result->minutes = time1->minutes - time2->minutes;
+            if(time1->seconds >= time2->seconds){
+                result->seconds = time1->seconds - time2->seconds;
+            }
+            else{
+                if(time1->minutes > 0){
+                    time1->minutes = time1->minutes - 1;
+                    time1->seconds = time1->seconds + 60;
+                    result->seconds = time1->seconds - time2->seconds;
+                }
+                else{
+                    if(time1->hours > 0){
+                        time1->hours = time1->hours - 1;
+                        time1->minutes = time1->minutes + 60;
+                        time1->minutes = time1->minutes - 1;
+                        time1->seconds = time1->seconds + 60;
+                        result->seconds = time1->seconds - time2->seconds;
+                    }
+                    else{
+                        printf("Can't substract structures, because the time will be negative!\n");
+                    }
+                }
+            }
+        }
+        else{
+            if(time1->hours > 0){
+                time1->hours = time1->hours - 1;
+                time1->minutes = time1->minutes + 60;
+                result->minutes = time1->minutes - time2->minutes;
+            }
+            else{
+                printf("Can't substract structures, because the time will be negative!\n");
+            }
+
+            if(time1->seconds >= time2->seconds){
+                result->seconds = time1->seconds - time2->seconds;
+            }
+            else{
+                if(time1->minutes > 0){
+                    time1->minutes = time1->minutes - 1;
+                    time1->seconds = time1->seconds + 60;
+                    result->seconds = time1->seconds - time2->seconds;
+                }
+                else{
+                    if(time1->hours > 0){
+                        time1->hours = time1->hours - 1;
+                        time1->minutes = time1->minutes + 60;
+                        time1->minutes = time1->minutes - 1;
+                        time1->seconds = time1->seconds + 60;
+                        result->seconds = time1->seconds - time2->seconds;
+                    }
+                    else{
+                        printf("Can't substract structures, because the time will be negative!\n");
+                    }
+                }
+            }
+        }
     }
     else{
         result->hours = time2->hours - time1->hours;
-    }
-    if(time1->minutes > time2->minutes){ // Проверка за часовете и минутите от структурите
-        result->minutes = time1->minutes - time2->minutes;
-    }
-    else{
-        result->minutes = time2->minutes - time1->minutes;
-    }
-    if(time1->seconds > time2->seconds){
-        result->seconds = time1->seconds - time2->seconds;
-    }
-    else{
-        result->seconds = time2->seconds - time1->seconds;
+        if(time2->minutes >= time1->minutes){
+            result->minutes = time2->minutes - time1->minutes;
+            if(time2->seconds >= time1->seconds){
+                result->seconds = time2->seconds - time1->seconds;
+            }
+            else{
+                if(time2->minutes > 0){
+                    time2->minutes = time2->minutes - 1;
+                    time2->seconds = time2->seconds + 60;
+                    result->seconds = time2->seconds - time1->seconds;
+                }
+                else{
+                    if(time2->hours > 0){
+                        time2->hours = time2->hours - 1;
+                        time2->minutes = time2->minutes + 60;
+                        time2->minutes = time2->minutes - 1;
+                        time2->seconds = time2->seconds + 60;
+                        result->seconds = time2->seconds - time1->seconds;
+                    }
+                    else{
+                        printf("Can't substract structures, because the time will be negative!\n");
+                    }
+                }
+            }
+        }
+        else{
+            if(time2->hours > 0){
+                time2->hours = time2->hours - 1;
+                time2->minutes = time2->minutes + 60;
+                result->minutes = time2->minutes - time1->minutes;
+            }
+            else{
+                printf("Can't substract structures, because the time will be negative!\n");
+            }
+
+            if(time2->seconds >= time1->seconds){
+                result->seconds = time2->seconds - time1->seconds;
+            }
+            else{
+                if(time2->minutes > 0){
+                    time2->minutes = time2->minutes - 1;
+                    time2->seconds = time2->seconds + 60;
+                    result->seconds = time2->seconds - time1->seconds;
+                }
+                else{
+                    if(time2->hours > 0){
+                        time2->hours = time2->hours - 1;
+                        time2->minutes = time2->minutes + 60;
+                        time2->minutes = time2->minutes - 1;
+                        time2->seconds = time2->seconds + 60;
+                        result->seconds = time2->seconds - time1->seconds;
+                    }
+                    else{
+                        printf("Can't substract structures, because the time will be negative!\n");
+                    }
+                }
+            }
+        }
     }
 
     return result;
