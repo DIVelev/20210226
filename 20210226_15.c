@@ -62,24 +62,23 @@ void printParticipants(Participants *part,int number){
 Participants* sortParticipants(Participants *part,int number){
    
     int i,j;
-    Participants* sortedParticipants = (Participants*)malloc(number*sizeof(Participants));
-    String temp = (String)malloc(20*sizeof(char));
     int integerSort;
-    for(i=0;i<number - 1;i++){
-        for(j=i+1;j<number - 1;j++){
-            if(strcmp(((part+j)->name),(part+j+1)->name)>0){
-                strcpy(temp,(part+j)->name);
-                strcpy((part+j)->name,(part+j+1)->name);
-                strcpy((part+j+1)->name,temp);
-                strcpy(temp,(part+j)->familyName);
-                strcpy((part+j)->familyName,(part+j+1)->familyName);
-                strcpy((part+j+1)->familyName,temp);
-                integerSort = (part+j)->id;
-                (part+j)->id = (part+j+1)->id;
-                (part+j+1)->id = integerSort;
-                integerSort = (part+j)->age;
-                (part+j)->age = (part+j+1)->age;
-                (part+j+1)->age = integerSort;
+    for(i=0;i<number;i++){
+        for(j=i+1;j<number;j++){
+            String temp = (String)malloc(20*sizeof(char));
+            if(strcmp(((part+i)->name),(part+j)->name)>0){
+                strcpy(temp,(part+i)->name);
+                strcpy((part+i)->name,(part+j)->name);
+                strcpy((part+j)->name,temp);
+                strcpy(temp,(part+i)->familyName);
+                strcpy((part+i)->familyName,(part+j)->familyName);
+                strcpy((part+j)->familyName,temp);
+                integerSort = (part+i)->id;
+                (part+i)->id = (part+j)->id;
+                (part+j)->id = integerSort;
+                integerSort = (part+i)->age;
+                (part+i)->age = (part+j)->age;
+                (part+j)->age = integerSort;
             }
         }
     }
